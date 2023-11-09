@@ -1,0 +1,42 @@
+https://practice.geeksforgeeks.org/problems/finding-the-numbers0215/1?utm_source=geeksforgeeks&utm_medium=article_practice_tab&utm_campaign=article_practice_tab
+
+https://www.youtube.com/watch?v=aId6iahUGLI&list=PLX0iyO9CrCF37xH1TjkmlHs5VMA5MWjme&index=3&ab_channel=HimanshuSingal
+
+class Solution
+{
+public:
+    vector<int> singleNumber(vector<int> arr) 
+    {
+        int n = arr.size();
+        int ans = arr[0];
+        for(int i=1 ; i<n ; i++){
+            ans = ans^arr[i]; 
+        }
+        int num = ans;
+        int ith = 0;
+        int isSet;
+        while(num>0){
+            isSet = num&1;
+            if(isSet == 1)break;
+            num = num>>1;
+            ith += 1;
+        }
+        int ans1 = 0;
+        for(int i=0 ; i<n ; i++){
+            int t = arr[i]&(1<<ith);
+            if((arr[i]>>ith)&1 == 1){
+                ans1 = ans1^arr[i];
+            }
+        }
+        ans = ans^ans1;
+        vector<int> re;
+        if(ans>ans1){
+            re.push_back(ans1);
+            re.push_back(ans);
+            return re;
+        }
+        re.push_back(ans);
+        re.push_back(ans1);
+        return re;
+    }
+};

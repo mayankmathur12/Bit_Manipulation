@@ -1,0 +1,65 @@
+https://codeforces.com/problemset/problem/535/B 
+
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    string s; cin>>s;
+    int digit = s.size();
+    if(s.size()==1){
+        if(s[0]=='4'){
+            cout<<"1"<<endl;
+        }
+        else cout<<"2"<<endl;
+        return 0;
+    }
+    int last = 2;
+    int lessThan=2;
+    for(int i=2 ; i<digit ; i++){
+        last = last*2;
+        lessThan += last;
+    }
+    int ans = 1;
+    last = last*2;
+    for(int i=0 ; i<digit ; i++){
+        last = last/2;
+        if(s[i] == '7')ans += last;
+    }
+    cout<<ans+lessThan<<endl;
+    return 0;
+}
+
+__________________________________________________
+2nd Way
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int power(int n){
+    if(n==0)return 1;
+    if(n==1)return 2;
+    if(n&1 == 1)return 2*power(n-1);
+    int temp = power(n/2);
+    return temp*temp;
+}
+int main(){
+    string s; cin>>s;
+    int digit = s.size();
+    if(s.size()==1){
+        if(s[0]=='4'){
+            cout<<"1"<<endl;
+        }
+        else cout<<"2"<<endl;
+        return 0;
+    }
+
+//here we use bit manipulation
+    int lessThan = (1<<digit)-2;
+    int last = power(digit);
+    int ans = 1;
+    for(int i=0 ; i<digit ; i++){
+        last = last/2;
+        if(s[i]=='7')ans += last;
+    }
+    cout<<ans + lessThan <<endl;
+    return 0;
+}

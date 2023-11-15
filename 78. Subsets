@@ -1,0 +1,46 @@
+https://leetcode.com/problems/subsets/description/
+
+https://www.youtube.com/watch?v=G0tV-K8-8l0&list=PLX0iyO9CrCF37xH1TjkmlHs5VMA5MWjme&index=6&ab_channel=HimanshuSingal
+
+//bit manipulation
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& ans) {
+        int n = ans.size();
+        int sub = (1<<n) - 1;
+        vector<vector<int>> answer(sub+1, vector<int>(0));
+        for(int i=1 ; i<=sub ; i++){
+            int temp = i , j=0;
+            while(temp>0 && j<n){
+                if(temp&1 == 1)answer[i].push_back(ans[j]);
+                j += 1;
+                temp = temp>>1;
+            }
+        }
+        return answer;
+    }
+};
+
+//backtracking
+
+class Solution {
+public:
+    void solve(vector<int>& arr, int pos,int n,vector<int>& ans,vector<vector<int>>& answer){
+        if(pos == n){
+            answer.push_back(ans);
+            return;
+        }
+        solve(arr,pos+1,n,ans,answer);
+        
+        ans.push_back(arr[pos]);
+        solve(arr,pos+1,n,ans,answer);
+        ans.pop_back();
+    }
+    vector<vector<int>> subsets(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> ans;
+        vector<vector<int>> answer;
+        solve(arr,0,n,ans,answer);
+        return answer;
+    }
+}
